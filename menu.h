@@ -8,12 +8,12 @@ typedef void (*ptr_func)(void);
 typedef struct menu {
 	char ch;
 	char *desc;
-	bool type;								/* if there is submenu type=1 , and else type=0 */
+	bool type;					/* if there is submenu type=1 , and else type=0 */
 	union{
-		ptr_func task_ptr;					/* pointer to the task */
+		ptr_func task_ptr;			/* pointer to the task */
 		struct{
-			struct menu *child_arr;			/* pointer to array of structs (next submenu)*/
-			int child_arr_len;				/* number of items of next submenu */
+			struct menu *child_arr;		/* pointer to array of structs (next submenu)*/
+			int child_arr_len;		/* number of items of next submenu */
 		}Next;
 	};
 	struct menu *parrent_arr;			/* pointer to array of structs (next submenu)*/
