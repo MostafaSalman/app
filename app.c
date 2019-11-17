@@ -4,6 +4,35 @@
 #include <windows.h>
 #include"app.h"
 
+void Creat_Menu(Menu *arr, int size, Menu **menu_items){
+	int i;
+	static int j=0;
+	static Menu *parrent[MAX_MENUS];
+	static int parrent_len;
+	
+	// Creat Menu By Coping Its Items In Its Array 
+	for(i=0; i<size; i++){
+		arr[i].ch = menu_items[i]->ch;
+		arr[i].desc = menu_items[i]->desc;
+		arr[i].type = menu_items[i]->type;
+		if(arr[i].type == false){
+			arr[i].task_ptr = menu_items[i]->task_ptr;
+		}
+		else{
+			arr[i].Next.child_arr = menu_items[i]->Next.child_arr;
+			arr[i].Next.child_arr_len = menu_items[i]->Next.child_arr_len;
+		}
+	}
+	if(parrent_len ==0){
+		parrent[0] = arr;
+		parrent_len = size;
+	}
+	arr[0].parrent_arr = parrent[j];
+	arr[0].parrent_arr_len = parrent_len;
+	parrent[++j] = arr;
+	parrent_len = size;
+}
+
 void Menu_func(Menu *arr, int num){
 	static char option;
 	int i;
@@ -15,9 +44,9 @@ void Menu_func(Menu *arr, int num){
 	{
 		printf("\n[%c] %s",(arr[i].ch),(arr[i].desc));
 	}
-	printf("\n\n[B] Back\n[X] Exit"
+	printf("\n\n[%c] Back\n[%c] Exit"
 		"\n...................................."
-		"\nChoose an option from the above menu:");
+		"\nChoose an option from the above menu:", back_ch, exit_ch);
 	
 	//Reads the user's option
 	scanf(" %c", &option);
@@ -27,12 +56,12 @@ void Menu_func(Menu *arr, int num){
 void Excute_Menu(char *option, Menu *arr, int num){
 	int i;
 	char temp;
-	if(*option == 'X'){
+	if(*option == exit_ch){
 		//Exits the system
 		return;
 	}
 	
-	if(*option == 'B'){
+	if(*option == back_ch){
 		//Go to the back menu
 		Menu_func(arr[0].parrent_arr, arr[0].parrent_arr_len);
 		return;
