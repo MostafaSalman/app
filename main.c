@@ -44,12 +44,12 @@ int main(void){
 		printf("\n");
 		system("clear");
 		printf("\n**********welcome to our system**********\n"
-			"\nTo display our menu press %c\nTo exit press X \napp>",display);
+			"\nTo display our menu press %c\nTo exit press %c \napp>", display, exit_ch);
 		scanf("%c",&input);
-	}while((input != display)&&(input != 'X'));
+	}while((input != display)&&(input != exit_ch));
 	if(input == display)
 		Menu_func(array, NUM_ARR);
-	else if(input == 'X')
+	else if(input == exit_ch)
 		return 0;
 
 	return 0;
